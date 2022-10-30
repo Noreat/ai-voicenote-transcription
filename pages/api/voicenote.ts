@@ -42,7 +42,7 @@ export default async function handler(
     console.log('ERROR -->> not audio');
 
     await axios.post(
-      `https://api.connectly.ai/v1/businesses/${{ businessId }}/send/messages`,
+      `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
       {
         sender: {
           id: aiNUmber,
