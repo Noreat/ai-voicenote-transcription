@@ -28,7 +28,7 @@ export default async function handler(
 
   console.log('Received', req.body);
   const userNumber = req.body.sender.id;
-  const typeOfMedia = req.body.message.attachments[0].type || 'not audio';
+  const typeOfMedia = req.body.message.attachments[0]?.type || 'not audio';
 
   if (typeOfMedia !== 'audio') {
 
