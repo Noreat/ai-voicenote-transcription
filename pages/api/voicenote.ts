@@ -6,14 +6,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  console.log(
-    'ENV VARS',
-    process.env.BANANA_API_KEY,
-    process.env.BANANA_MODEL_KEY,
-    process.env.CONNECTLY_API_KEY,
-    process.env.CONNECTLY_BUSINESS_ID,
-    process.env.WHATSAPP_NUMBER
-  );
 
   const {
     BANANA_API_KEY: bananaApiKey,
@@ -105,8 +97,11 @@ export default async function handler(
       new Buffer.from(response.data, 'binary').toString('base64')
     );
 
+    console.log('Banana model key', modelKey);
+    console.log('Banana api key', bananaApiKey);
+
   const output = await banana
-    .run(bananaApiKey || '', modelKey || '', { mp3BytesString: result })
+    .run(bananaApiKey, modelKey, { mp3BytesString: result })
     .catch((error) => console.error('Error =>', error));
 
   console.log('Output =>', output);
