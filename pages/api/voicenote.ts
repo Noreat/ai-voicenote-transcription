@@ -6,7 +6,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-
   const {
     BANANA_API_KEY: bananaApiKey,
     BANANA_MODEL_KEY: modelKey,
@@ -97,14 +96,19 @@ export default async function handler(
       new Buffer.from(response.data, 'binary').toString('base64')
     );
 
-    console.log('Banana model key', modelKey);
-    console.log('Banana api key', bananaApiKey);
+  console.log('Banana model key', modelKey);
+  console.log('Banana api key', bananaApiKey);
 
-  const output = await banana
+  const output: any = await banana
     .run(bananaApiKey, modelKey, { mp3BytesString: result })
     .catch((error) => console.error('Error =>', error));
 
   console.log('Output =>', output);
+
+  if (!output || !output.modelOutputs || !output.modelOutputs[0].text) {
+    console.log('ERROR -->> no output');
+    return res.status(500).json({ error: 'No output' });
+  }
 
   const connectlyResponse = await axios.post(
     `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
@@ -118,7 +122,7 @@ export default async function handler(
         channelType: 'whatsapp'
       },
       message: {
-        text: 'output'
+        text: output.modelOutputs[0].text
       }
     },
     {
@@ -129,5 +133,5 @@ export default async function handler(
       }
     }
   );
-  res.status(200).json({ message: 'output', response: connectlyResponse });
+  res.status(200).json({ message: output });
 }
