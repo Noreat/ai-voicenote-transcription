@@ -94,6 +94,8 @@ export default async function handler(
 
   const audio = req.body.message.attachments[0].url;
 
+  console.log('Audio url', audio);
+
   let result: any = await axios
     .get(audio, {
       responseType: 'arraybuffer'
@@ -121,7 +123,7 @@ export default async function handler(
         channelType: 'whatsapp'
       },
       message: {
-        text: output
+        text: 'output'
       }
     },
     {
