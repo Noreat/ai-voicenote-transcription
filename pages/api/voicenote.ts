@@ -85,8 +85,6 @@ export default async function handler(
 
   const audio = req.body.message.attachments[0].url;
 
-  console.log('Audio url', audio);
-
   let result: any = await axios
     .get(audio, {
       responseType: 'arraybuffer'
@@ -95,9 +93,6 @@ export default async function handler(
       // @ts-ignore
       new Buffer.from(response.data, 'binary').toString('base64')
     );
-
-  console.log('Banana model key', modelKey);
-  console.log('Banana api key', bananaApiKey);
 
   const output: any = await banana
     .run(bananaApiKey, modelKey, { mp3BytesString: result })
@@ -110,7 +105,7 @@ export default async function handler(
     return res.status(500).json({ error: 'No output' });
   }
 
-  const connectlyResponse = await axios.post(
+  await axios.post(
     `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
     {
       sender: {
@@ -122,7 +117,7 @@ export default async function handler(
         channelType: 'whatsapp'
       },
       message: {
-        text: output.modelOutputs[0].text
+        text: `Here is the message you sent:\n\n${output.modelOutputs[0].text}`
       }
     },
     {
