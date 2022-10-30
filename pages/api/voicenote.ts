@@ -69,7 +69,7 @@ export default async function handler(
   }
 
   await axios.post(
-    `https://api.connectly.ai/v1/businesses/${{ businessId }}/send/messages`,
+    `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
     {
       sender: {
         id: aiNUmber,
@@ -81,6 +81,13 @@ export default async function handler(
       },
       message: {
         text: 'Your request has been received. Please give us a a minute or two to process your request.'
+      }
+    },
+    {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-API-Key': connectlyApiKey
       }
     }
   );
@@ -103,7 +110,7 @@ export default async function handler(
   console.log('Output =>', output);
 
   const connectlyResponse = await axios.post(
-    `https://api.connectly.ai/v1/businesses/${{ businessId }}/send/messages`,
+    `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
     {
       sender: {
         id: aiNUmber,
@@ -115,6 +122,13 @@ export default async function handler(
       },
       message: {
         text: 'Hello!'
+      }
+    },
+    {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-API-Key': connectlyApiKey
       }
     }
   );
