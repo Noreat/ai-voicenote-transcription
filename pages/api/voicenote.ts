@@ -6,6 +6,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+  console.log(
+    'ENV VARS',
+    process.env.BANANA_API_KEY,
+    process.env.BANANA_API_SECRET,
+    process.env.CONNECTLY_API_KEY,
+    process.env.CONNECTLY_BUSINESS_ID,
+    process.env.WHATSAPP_NUMBER
+  );
 
   const {
     BANANA_API_KEY: bananaApiKey,
@@ -31,7 +39,6 @@ export default async function handler(
   const typeOfMedia = req.body.message.attachments[0]?.type || 'not audio';
 
   if (typeOfMedia !== 'audio') {
-
     console.log('ERROR -->> not audio');
 
     await axios.post(
