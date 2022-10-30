@@ -9,7 +9,7 @@ export default async function handler(
   console.log(
     'ENV VARS',
     process.env.BANANA_API_KEY,
-    process.env.BANANA_API_SECRET,
+    process.env.BANANA_MODEL_KEY,
     process.env.CONNECTLY_API_KEY,
     process.env.CONNECTLY_BUSINESS_ID,
     process.env.WHATSAPP_NUMBER
@@ -31,7 +31,7 @@ export default async function handler(
     !aiNUmber
   ) {
     console.log('ERROR -->> no env variables');
-    res.status(500).json({ error: 'No env variables' });
+    return res.status(500).json({ error: 'No env variables' });
   }
 
   console.log('Received', req.body);
