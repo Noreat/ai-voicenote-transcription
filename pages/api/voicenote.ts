@@ -121,7 +121,7 @@ export default async function handler(
         channelType: 'whatsapp'
       },
       message: {
-        text: 'Hello!'
+        text: output
       }
     },
     {
