@@ -55,6 +55,13 @@ export default async function handler(
         message: {
           text: 'You can only send audio files'
         }
+      },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-Key': connectlyApiKey
+        }
       }
     );
 
