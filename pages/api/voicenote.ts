@@ -94,8 +94,6 @@ export default async function handler(
       new Buffer.from(response.data, 'binary').toString('base64')
     );
 
-  console.log('result length', (result.length - 814) / 1.37);
-
   const output: any = await banana
     .run(bananaApiKey, modelKey, { mp3BytesString: result })
     .catch((error) => console.error('Error =>', error));
@@ -108,7 +106,7 @@ export default async function handler(
   }
 
   let message = `Your request has been processed. Here is the text we extracted from your audio file:\n\n${output.modelOutputs[0].text}`;
-  const numberOfMessagesToSend = Math.ceil(message.length / 1010 + 1);
+  const numberOfMessagesToSend = Math.ceil(message.length / 1010);
   console.log('number of messages to send', numberOfMessagesToSend);
   const messagesToSend = [];
   for (let i = 0; i < numberOfMessagesToSend; i++) {
