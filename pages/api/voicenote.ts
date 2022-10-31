@@ -89,10 +89,13 @@ export default async function handler(
     .get(audio, {
       responseType: 'arraybuffer'
     })
-    .then((response: any) =>
+    .then((response: any) => {
+      console.log('response -->>', response.data);
       // @ts-ignore
-      new Buffer.from(response.data, 'binary').toString('base64')
-    );
+      new Buffer.from(response.data, 'binary').toString('base64');
+    });
+
+    console.log('result length -->>', result.length);
 
   const output: any = await banana
     .run(bananaApiKey, modelKey, { mp3BytesString: result })
