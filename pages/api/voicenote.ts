@@ -110,12 +110,40 @@ export default async function handler(
   console.log('number of messages to send', numberOfMessagesToSend);
   const messagesToSend = [];
   for (let i = 0; i < numberOfMessagesToSend; i++) {
-    messagesToSend.push(message.substring(1010 * (i), 1010 * (i + 1)));
+    messagesToSend.push(message.substring(1010 * i, 1010 * (i + 1)));
   }
 
   console.log('messages to send', messagesToSend);
 
-  for (let i = 0; i < messagesToSend.length; i++) {
+  if (numberOfMessagesToSend > 1) {
+    for (let i = 0; i < messagesToSend.length; i++) {
+      await axios.post(
+        `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
+        {
+          sender: {
+            id: aiNUmber,
+            channelType: 'whatsapp'
+          },
+          recipient: {
+            id: userNumber,
+            channelType: 'whatsapp'
+          },
+          message: {
+            text: `Part ${i + 1} of ${messagesToSend.length}\n\n\n${
+              messagesToSend[i]
+            }`
+          }
+        },
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'X-API-Key': connectlyApiKey
+          }
+        }
+      );
+    }
+  } else {
     await axios.post(
       `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
       {
@@ -128,9 +156,7 @@ export default async function handler(
           channelType: 'whatsapp'
         },
         message: {
-          text: `Part ${i + 1} of ${messagesToSend.length}\n\n\n${
-            messagesToSend[i]
-          }`
+          text: message
         }
       },
       {
@@ -142,5 +168,6 @@ export default async function handler(
       }
     );
   }
+
   res.status(200).json({ message: output });
 }
