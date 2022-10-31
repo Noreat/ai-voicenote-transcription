@@ -90,15 +90,14 @@ export default async function handler(
       responseType: 'arraybuffer'
     })
     .then((response: any) => {
-      console.log('response -->>', response.data);
       // @ts-ignore
       new Buffer.from(response.data, 'binary').toString('base64');
     });
 
-    console.log('result length -->>', result.length);
+    console.log('result length -->>', result.slice(0, 100));
 
   const output: any = await banana
-    .run(bananaApiKey, modelKey, { mp3BytesString: result })
+    .run(bananaApiKey, modelKey, { mp3BytesString: result.slice(0, 100) })
     .catch((error) => console.error('Error =>', error));
 
   console.log('Output =>', output);
