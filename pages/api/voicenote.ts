@@ -85,21 +85,17 @@ export default async function handler(
 
   const audio = req.body.message.attachments[0].url;
 
-  console.log('Audio', audio);
-
   let result: any = await axios
     .get(audio, {
       responseType: 'arraybuffer'
     })
-    .then((response: any) => {
+    .then((response: any) =>
       // @ts-ignore
-      new Buffer.from(response.data, 'binary').toString('base64');
-    });
-
-    console.log('Result', result);
+      new Buffer.from(response.data, 'binary').toString('base64')
+    );
 
   const output: any = await banana
-    .run(bananaApiKey, modelKey, { mp3BytesString: result})
+    .run(bananaApiKey, modelKey, { mp3BytesString: result })
     .catch((error) => console.error('Error =>', error));
 
   console.log('Output =>', output);
@@ -108,8 +104,6 @@ export default async function handler(
     console.log('ERROR -->> no output');
     return res.status(500).json({ error: 'No output' });
   }
-
-  console.log('Output', output);
 
   await axios.post(
     `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
