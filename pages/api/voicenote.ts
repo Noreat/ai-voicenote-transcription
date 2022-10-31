@@ -107,28 +107,41 @@ export default async function handler(
     return res.status(500).json({ error: 'No output' });
   }
 
-  await axios.post(
-    `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
-    {
-      sender: {
-        id: aiNUmber,
-        channelType: 'whatsapp'
+  console.log();
+
+  let message = `Your request has been processed. Here is the text we extracted from your audio file:\n\n${output.modelOutputs[0].text}`;
+  const numberOfMessagesToSend = message.length / 1010 + 1;
+  const messagesToSend = [];
+  for (let i = 0; i <= numberOfMessagesToSend; i++) {
+    messagesToSend.push(message.substring(1010 * (i - 1), 1010 * i));
+  }
+
+  for (let i = 0; i < messagesToSend.length; i++) {
+    await axios.post(
+      `https://api.connectly.ai/v1/businesses/${businessId}/send/messages`,
+      {
+        sender: {
+          id: aiNUmber,
+          channelType: 'whatsapp'
+        },
+        recipient: {
+          id: userNumber,
+          channelType: 'whatsapp'
+        },
+        message: {
+          text: `Part ${i + 1} of ${messagesToSend.length}\n\n\n${
+            messagesToSend[i]
+          }`
+        }
       },
-      recipient: {
-        id: userNumber,
-        channelType: 'whatsapp'
-      },
-      message: {
-        text: `Here is the message you sent:\n\n${output.modelOutputs[0].text}`
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-API-Key': connectlyApiKey
+        }
       }
-    },
-    {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-API-Key': connectlyApiKey
-      }
-    }
-  );
+    );
+  }
   res.status(200).json({ message: output });
 }
