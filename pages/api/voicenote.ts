@@ -105,7 +105,7 @@ export default async function handler(
     return res.status(500).json({ error: 'No output' });
   }
 
-  let message = `Your request has been processed. Here is the text we extracted from your audio file:\n\n${output.modelOutputs[0].text}`;
+  let message = `*Your request has been processed. Here is the text we extracted from your audio file:*\n\n${output.modelOutputs[0].text}`;
   const numberOfMessagesToSend = Math.ceil(message.length / 1010);
   console.log('number of messages to send', numberOfMessagesToSend);
   const messagesToSend = [];
