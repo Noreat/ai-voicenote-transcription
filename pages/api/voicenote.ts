@@ -94,10 +94,10 @@ export default async function handler(
       new Buffer.from(response.data, 'binary').toString('base64')
     );
 
-  console.log('result length', result.length);
+  console.log('result length', (result.length - 814) / 1.37);
 
   const output: any = await banana
-    .run(bananaApiKey, modelKey, { mp3BytesString: result.slice(0, 100) })
+    .run(bananaApiKey, modelKey, { mp3BytesString: result })
     .catch((error) => console.error('Error =>', error));
 
   console.log('Output =>', output);
