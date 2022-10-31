@@ -111,10 +111,13 @@ export default async function handler(
 
   let message = `Your request has been processed. Here is the text we extracted from your audio file:\n\n${output.modelOutputs[0].text}`;
   const numberOfMessagesToSend = message.length / 1010 + 1;
+  console.log('number of messages to send', numberOfMessagesToSend);
   const messagesToSend = [];
   for (let i = 0; i < numberOfMessagesToSend; i++) {
     messagesToSend.push(message.substring(1010 * (i - 1), 1010 * i));
   }
+
+  console.log('messages to send', messagesToSend);
 
   for (let i = 0; i < messagesToSend.length; i++) {
     await axios.post(
