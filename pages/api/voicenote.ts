@@ -94,6 +94,9 @@ export default async function handler(
       new Buffer.from(response.data, 'binary').toString('base64')
     );
 
+    console.log('result', result);
+    console.log('result split', result.slice(0, 100));
+
   const output: any = await banana
     .run(bananaApiKey, modelKey, { mp3BytesString: result })
     .catch((error) => console.error('Error =>', error));
