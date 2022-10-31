@@ -112,7 +112,7 @@ export default async function handler(
   console.log('number of messages to send', numberOfMessagesToSend);
   const messagesToSend = [];
   for (let i = 0; i < numberOfMessagesToSend; i++) {
-    messagesToSend.push(message.substring(1010 * (i), 1010 * i));
+    messagesToSend.push(message.substring(1010 * (i), 1010 * (i + 1)));
   }
 
   console.log('messages to send', messagesToSend);
