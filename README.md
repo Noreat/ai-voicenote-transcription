@@ -6,4 +6,4 @@ Using Whisper through [Banana](https://www.banana.dev/) and using the [Connectly
 
 
 
-PS: In theory, audio of any length should be supported however, it has only been tested with audio up to 2 minutes. Once the audio gets to around 1 minute 30 seconds, the transcribed reply will be broken into multiple messages (this is forced by the character limit on the Connectly WhatsApp API) and the ordering of these messages is sometimes off.
+PS: In theory, audio of any length should be supported however, it has only been tested with audio up to 2 minutes. Once the audio gets to around 1 minute 30 seconds, the transcribed reply will be broken into multiple messages (this is forced by the character limit on the Connectly WhatsApp API) and the ordering of these messages is sometimes off. However, this issue should be corrected soon.
