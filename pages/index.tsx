@@ -17,7 +17,6 @@ export default function Home() {
         <Text fontSize={'50px'} color='white'>
           <a href='https://wa.me/14159035826'>+1 (415) 903-5826</a>
         </Text>
-        <Text color='white'>NB: Voice notes must be less than 1 minute</Text>
       </VStack>
     </Box>
   );
